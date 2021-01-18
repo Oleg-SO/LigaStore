@@ -255,11 +255,33 @@
 				<div class="row mt--50">
 					<div class="col-md-12 col-lg-12 col-sm-12">
 						<div class="product__nav nav justify-content-center" role="tablist">
-                            <a class="nav-item nav-link active" data-toggle="tab" href="#nav-all" role="tab">Электроинструменты</a>
-                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-biographic" role="tab">Ручной инструмент</a>
-                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-adventure" role="tab">Строительное оборудование</a>
-                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-children" role="tab">Газовые котлы</a>
-                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-cook" role="tab">Насосы - мотопомны</a>
+						
+						@foreach($categories as $_category)
+											@if($_category->products()->count() == null && $_category->name == 'Электроинструменты')
+                            <a class="nav-item nav-link active" data-toggle="tab" href="#nav-all" role="tab">{{ $_category->name }}</a>
+							@endif
+                                @endforeach
+								@foreach($categories as $_category)
+											@if($_category->products()->count() == null && $_category->name == 'Расходный Инструмент')
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-biographic" role="tab">{{ $_category->name }}</a>
+							@endif
+                                @endforeach
+								@foreach($categories as $_category)
+											@if($_category->products()->count() == null && $_category->name == 'Малярно-Штукатурный Инструмент')
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-adventure" role="tab">{{ $_category->name }}</a>
+							@endif
+                                @endforeach
+							@foreach($categories as $_category)
+											@if($_category->products()->count() == null && $_category->name == 'Измирительные Инструменты')
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-children" role="tab">{{ $_category->name }}</a>
+							@endif
+                                @endforeach
+							@foreach($categories as $_category)
+											@if($_category->products()->count() == null && $_category->name == 'Столярно-Слесарный Инструмент')
+                            <a class="nav-item nav-link" data-toggle="tab" href="#nav-cook" role="tab">{{ $_category->name }}</a>
+							@endif
+                                @endforeach
+								
                         </div>
 					</div>
 				</div>
@@ -269,20 +291,22 @@
 						<div class="product__indicator--4 arrows_style owl-carousel owl-theme">
 							<div class="single__product">
 								<!-- Start Single Product -->
+								@foreach ($products as $_product)
+                                        @foreach($_product as $product)
 								<div class="col-lg-3 col-md-4 col-sm-6 col-12">
 									<div class="product product__style--3">
 										<div class="product__thumb">
-											<a class="first__img" href="single-product.html"><img src="images/books/1.jpg" alt="product image"></a>
-											<a class="second__img animation1" href="single-product.html"><img src="images/books/2.jpg" alt="product image"></a>
+											<a class="first__img" href="{{ route('shop.show', $product->slug) }}"><img src="{{ productImage($product->image) }}" alt="product image"></a>
+											<a class="second__img animation1" href="{{ route('shop.show', $product->slug) }}"><img src="{{ productImage($product->image) }}" alt="product image"></a>
 											<div class="hot__box">
 												<span class="hot-label">Частые продажи</span>
 											</div>
 										</div>
 										<div class="product__content content--center content--center">
-											<h4><a href="single-product.html">Ghost</a></h4>
+											<h4><a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a></h4>
 											<ul class="prize d-flex">
-												<li>$50.00</li>
-												<li class="old_prize">$35.00</li>
+												<li>{{ $product->presentPrice() }}</li>
+												<!-- <li class="old_prize">$35.00</li> -->
 											</ul>
 											<div class="action">
 												<div class="actions_inner">
@@ -306,6 +330,8 @@
 										</div>
 									</div>
 								</div>
+								@endforeach
+                                @endforeach
 								<!-- Start Single Product -->
 								<!-- Start Single Product -->
 								<div class="col-lg-3 col-md-4 col-sm-6 col-12">

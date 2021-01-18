@@ -60,7 +60,7 @@ class ShopController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->firstOrFail();
-        $mightAlsoLike = Product::where('featured')->get();
+        $mightAlsoLike = Product::where('featured', true)->get();
         $category = Category::get();
         // $sku_number = Product::where('sku_number')->get();
         $categories = Category::whereNull('parent_id')->get();
